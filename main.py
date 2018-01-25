@@ -5,7 +5,8 @@ from requests import RequestException
 
 # feed urls
 # feed = "http://rss.dw.com/rdf/rss-en-all"
-feed = "http://feeds.bbci.co.uk/news/rss.xml"
+# feed = "http://feeds.bbci.co.uk/news/rss.xml"
+feed = "https://feeds.feedburner.com/Torrentfreak"
 # fetch news items
 try:
     r = requests.get(feed)
@@ -16,7 +17,7 @@ else:
     titleTag = ['title']
     descriptionTag = ['description']
     linkTag = ['link']
-    subjectTag = ['subject']
+    subjectTag = ['subject', 'category']
     pubDateTag = ['date', 'pubDate']
     # parse document
     soup = BeautifulSoup(r.text, "xml")
@@ -36,7 +37,9 @@ else:
         else:
             itemLink = None
         if item.find(subjectTag):
-            itemSubject = item.find(subjectTag).contents[0]
+            itemSubject = []
+            for subject in item.find_all(subjectTag):
+                itemSubject.append(subject.contents[0])
         else:
             itemSubject = None
         if item.find(pubDateTag):
