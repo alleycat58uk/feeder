@@ -1,15 +1,17 @@
 import requests
 from bs4 import BeautifulSoup
 from requests import RequestException
+import json
 
 
 # feed urls
-# feed = "http://rss.dw.com/rdf/rss-en-all"
-# feed = "http://feeds.bbci.co.uk/news/rss.xml"
-feed = "https://feeds.feedburner.com/Torrentfreak"
+feed = ["http://www.france24.com/en/top-stories/rss",
+        "http://rss.dw.com/rdf/rss-en-all",
+        "http://feeds.bbci.co.uk/news/rss.xml",
+        "https://feeds.feedburner.com/Torrentfreak"]
 # fetch news items
 try:
-    r = requests.get(feed)
+    r = requests.get(feed[0])
 except RequestException as e:
     print('Error fetching website')
 else:
@@ -21,7 +23,7 @@ else:
     pubDateTag = ['date', 'pubDate']
     # parse document
     soup = BeautifulSoup(r.text, "xml")
-    print(soup.title.contents[0])
+    feedTitle = soup.title.contents[0]
     items = soup.find_all("item")
     for item in items:
         if item.find(titleTag):
@@ -37,9 +39,9 @@ else:
         else:
             itemLink = None
         if item.find(subjectTag):
-            itemSubject = []
+            itemSubjects = []
             for subject in item.find_all(subjectTag):
-                itemSubject.append(subject.contents[0])
+                itemSubjects.append(subject.contents[0])
         else:
             itemSubject = None
         if item.find(pubDateTag):
@@ -47,8 +49,11 @@ else:
         else:
             itemPubDate = None
         # print news item
-        print(itemTitle)
-        print(itemDesc)
-        print(itemLink)
-        print(itemSubject)
-        print(itemPubDate, "\n")
+        # print(itemTitle)
+        # print(itemDesc)
+        # print(itemLink)
+        # print(itemSubjects)
+        # print(itemPubDate, "\n")
+        payload = json.dumps({'feed': {'title': feedTitle}, 'item': {'title': itemTitle, 'description': itemDesc, 'link': itemLink, 'subjects': itemSubjects, 'pubDate': itemPubDate}})
+        rt = requests.post('http://127.0.0.1:5984/feeder', data=payload, headers={'Content-Type': 'application/json'})
+        print(rt)
