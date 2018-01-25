@@ -16,8 +16,14 @@ else:
     print(soup.title.contents[0])
     items = soup.find_all("item")
     for item in items:
-        print(item.title.contents[0])
-        print(item.description.contents[0])
-        print(item.link.contents[0])
-        print(item.subject.contents[0])
-        print(item.date.contents[0], "\n")
+        itemTitle = item.title.contents[0]
+        itemDesc = item.description.contents[0]
+        itemLink = item.link.contents[0]
+        itemSubject = item.subject.contents[0]
+        itemPubDate = item.date.contents[0]
+        #
+        print(itemTitle)
+        print(itemDesc)
+        print(itemLink)
+        print(itemSubject)
+        print(itemPubDate, "\n")
