@@ -43,7 +43,7 @@ else:
             for subject in item.find_all(subjectTag):
                 itemSubjects.append(subject.contents[0])
         else:
-            itemSubject = None
+            itemSubjects = None
         if item.find(pubDateTag):
             itemPubDate = item.find(pubDateTag).contents[0]
         else:
@@ -54,6 +54,11 @@ else:
         # print(itemLink)
         # print(itemSubjects)
         # print(itemPubDate, "\n")
-        payload = json.dumps({'feed': {'title': feedTitle}, 'item': {'title': itemTitle, 'description': itemDesc, 'link': itemLink, 'subjects': itemSubjects, 'pubDate': itemPubDate}})
+        payload = json.dumps({'feed': {'title': feedTitle},
+                              'item': {'title': itemTitle,
+                                       'description': itemDesc,
+                                       'link': itemLink,
+                                       'subjects': itemSubjects,
+                                       'pubDate': itemPubDate}})
         rt = requests.post('http://127.0.0.1:5984/feeder', data=payload, headers={'Content-Type': 'application/json'})
         print(rt)
