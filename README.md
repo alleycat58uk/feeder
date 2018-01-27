@@ -20,4 +20,4 @@ Natural language processing of RSS news feed aggregations
   - requests
   - beautifulsoup4
   - json
-  - couchDB (tested with 2.1.1)
+- couchDB 2 (tested with 2.1.1)
