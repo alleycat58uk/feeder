@@ -1,11 +1,15 @@
 # Feeder
 Natural language processing of RSS news feed aggregations
 
-## 
-The aim is to:
+## Aim
 - havest and agregate news feeds from around the world
 - provide a searchable interface to the data
 - use natural language processing to analyse the narative
+
+## progress
+- download, process and store feed items (current)
+- create search interface for stored items (to do)
+- natural language processing of items (to do)
 
 ## Technologies
 - **Python 3** is the scripting language because it comes highly recomended for this type of use case, plus I wanted to learn it!
@@ -16,5 +20,4 @@ The aim is to:
   - requests
   - beautifulsoup4
   - json
-  
-- couchDB (tested with 2.1.1)
+  - couchDB (tested with 2.1.1)
