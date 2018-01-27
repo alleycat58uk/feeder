@@ -2,13 +2,12 @@ import requests
 from bs4 import BeautifulSoup
 from requests import RequestException
 import json
+from feeder import feeds
 
 
-# feed urls
-feed = ["http://www.france24.com/en/top-stories/rss",
-        "http://rss.dw.com/rdf/rss-en-all",
-        "http://feeds.bbci.co.uk/news/rss.xml",
-        "https://feeds.feedburner.com/Torrentfreak"]
+# get feed urls
+feed = feeds.getFeeds()
+
 # fetch news items
 try:
     r = requests.get(feed[0])
@@ -48,13 +47,10 @@ else:
             itemPubDate = item.find(pubDateTag).contents[0]
         else:
             itemPubDate = None
-        # print news item
-        # print(itemTitle)
-        # print(itemDesc)
-        # print(itemLink)
-        # print(itemSubjects)
-        # print(itemPubDate, "\n")
-        payload = json.dumps({'feed': {'title': feedTitle},
+
+        # store news item
+        payload = json.dumps({'type': 'item',
+                              'feed': {'title': feedTitle},
                               'item': {'title': itemTitle,
                                        'description': itemDesc,
                                        'link': itemLink,
