@@ -12,8 +12,8 @@ Natural language processing of RSS news feed aggregations
 - natural language processing of items (to do)
 
 ## Technologies
-- **Python 3** is the scripting language because it comes highly recomended for this type of use case, plus I wanted to learn it!
-- **couchDB** is the prefered database, again because I wanted learn it.  Elastic search was a close contender and may be integrated as an option in the future.
+- Python 3
+- couchDB
 
 ## Dependencies
 - Python 3 (tested with 3.6.4)
