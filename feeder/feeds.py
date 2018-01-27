@@ -1,18 +1,22 @@
+def addFeed(name,url,region,subject,filter,dateFormat):
+    pass
+
+
 def getFeeds():
     pass
 
 
-def getFeedItems():
+def getFeedItems(feed):
     pass
 
 
-def checkItem():
+def checkItem(date,url):
     pass
 
 
-def formatDate():
+def formatDate(dateFormat):
     pass
 
 
-def saveItem():
+def saveItem(name,url,region,subject,filter,dateFormat):
     pass
