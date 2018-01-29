@@ -6,7 +6,7 @@ from feeder import feeds
 
 
 # get feed urls
-feed = feeds.getAllFeeds()
+feed = feeds.getallfeeds()
 
 # fetch news items
 try:
