@@ -13,6 +13,10 @@ def getFeedItems(feed):
     pass
 
 
+def getFeedItem(feed):
+    pass
+
+
 def checkItem(date,url):
     pass
 
