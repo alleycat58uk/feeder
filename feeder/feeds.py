@@ -1,29 +1,44 @@
-def addFeed(name,url,region,subject,filter,dateFormat):
+import requests
+import json
+
+
+def addfeed(name,url,region,subject,filter,dateformat):
     pass
 
 
-def getAllFeeds():
-    return ["http://www.france24.com/en/top-stories/rss",
-            "http://rss.dw.com/rdf/rss-en-all",
-            "http://feeds.bbci.co.uk/news/rss.xml",
-            "https://feeds.feedburner.com/Torrentfreak"]
+def getallfeeds():
+    url = "http://127.0.0.1:5984/feeder/_find"
+    headers = {'Content-Type': 'application/json', 'Accept': 'application/json'}
+    payload = json.dumps({
+        "selector": {
+            "type": {
+                "$eq": "feed"
+            }
+        },
+        "fields": [
+            "name",
+            "url",
+            "region",
+            "subject",
+            "filter",
+            "date-format"
+        ]
+    })
+    r = requests.post(url, headers=headers, data=payload)
+    return json.loads(r.text)['docs']
 
 
-def getFeedItems(feed):
+def getfeeditems(feed):
     pass
 
 
-def getFeedItem(feed):
+def checkitem(date,url):
     pass
 
 
-def checkItem(date,url):
+def formatdate(dateformat):
     pass
 
 
-def formatDate(dateFormat):
-    pass
-
-
-def saveItem(name,url,region,subject,filter,dateFormat):
+def saveitem(name,url,region,subject,filter,dateformat):
     pass

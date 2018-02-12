@@ -6,12 +6,12 @@ from feeder import feeds
 
 
 # get feed urls
-feeds = feeds.getAllFeeds()
+feeds = feeds.getallfeeds()
 
 # fetch news items
 for feed in feeds:
     try:
-        r = requests.get(feed)
+        r = requests.get(feed['url'])
     except RequestException as e:
         print('Error fetching website')
     else:
@@ -23,7 +23,7 @@ for feed in feeds:
         pubDateTag = ['date', 'pubDate']
         # parse document
         soup = BeautifulSoup(r.text, "xml")
-        feedTitle = soup.title.contents[0]
+        feedTitle = feed['name']
         items = soup.find_all("item")
         for item in items:
             if item.find(titleTag):
