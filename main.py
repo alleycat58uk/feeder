@@ -48,9 +48,14 @@ for feed in feeds:
             else:
                 itemPubDate = None
 
-            # store news item
+            # check if item already exists
+            # no - create record
+            # yes - amend
+
+            # store new item
             payload = json.dumps({'type': 'item',
                                   'accessed': {
+                                      'first': 'today',
                                       'last': 'today'
                                   },
                                   'feed': {'title': feed['name'],
