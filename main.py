@@ -23,7 +23,6 @@ for feed in feeds:
         pubDateTag = ['date', 'pubDate']
         # parse document
         soup = BeautifulSoup(r.text, "xml")
-        feedTitle = feed['name']
         items = soup.find_all("item")
         for item in items:
             if item.find(titleTag):
@@ -49,9 +48,20 @@ for feed in feeds:
             else:
                 itemPubDate = None
 
-            # store news item
+            # check if item already exists
+            # no - create record
+            # yes - amend
+
+            # store new item
             payload = json.dumps({'type': 'item',
-                                  'feed': {'title': feedTitle},
+                                  'accessed': {
+                                      'first': 'today',
+                                      'last': 'today'
+                                  },
+                                  'feed': {'title': feed['name'],
+                                           'region': feed['region'],
+                                           'subject': feed['subject'],
+                                           'filter': feed['filter']},
                                   'item': {'title': itemTitle,
                                            'description': itemDesc,
                                            'link': itemLink,
