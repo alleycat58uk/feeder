@@ -12,6 +12,7 @@ feeds = feeds.getallfeeds()
 for feed in feeds:
     try:
         r = requests.get(feed['url'])
+    # TODO: include proper, inclusive exception handling
     except RequestException as e:
         print('Error fetching website')
     else:
@@ -49,8 +50,9 @@ for feed in feeds:
                 itemPubDate = None
 
             # check if item already exists
+            # - criteria: feed title, url, itemTitle
             # no - create record
-            # yes - amend
+            # yes - amend (inc. last date accessed)
 
             # store new item
             payload = json.dumps({'type': 'item',
