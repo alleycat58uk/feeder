@@ -1,5 +1,6 @@
 import requests
 import json
+from datetime import datetime
 
 
 def addfeed(name,url,region,subject,filter,dateformat):
@@ -56,9 +57,9 @@ def getfeeditem(item,feedname,feedregion,feedsubject,feedfilter,dateformat):
         itemsubjects = None
     if item.find(pubdatetag):
         itempubdate = item.find(pubdatetag).contents[0]
-        itempubdateformatted = formatdate(itempubdate,dateformat)
+        itempubdateformatted = datetime.strptime(itempubdate, dateformat)
     else:
-        itempubdate = None
+        itempubdateformatted = None
     return json.dumps({'type': 'item',
                       'accessed': {
                           'first': 'today',
@@ -76,10 +77,6 @@ def getfeeditem(item,feedname,feedregion,feedsubject,feedfilter,dateformat):
 
 
 def checkitem(date,url):
-    pass
-
-
-def formatdate(date,dateformat):
     pass
 
 
