@@ -78,7 +78,7 @@ def checkitem(date,url):
     pass
 
 
-def formatdate(dateformat):
+def formatdate(date,dateformat):
     pass
 
 
