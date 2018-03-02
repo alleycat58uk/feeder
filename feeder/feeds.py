@@ -28,7 +28,7 @@ def getallfeeds():
     return json.loads(r.text)['docs']
 
 
-def getfeeditem(item,feedname,feedregion,feedsubject,feedfilter):
+def getfeeditem(item,feedname,feedregion,feedsubject,feedfilter,dateformat):
     # set tag name lists for parsing news items
     titletag = ['title']
     descriptiontag = ['description']
@@ -56,6 +56,7 @@ def getfeeditem(item,feedname,feedregion,feedsubject,feedfilter):
         itemsubjects = None
     if item.find(pubdatetag):
         itempubdate = item.find(pubdatetag).contents[0]
+        itempubdateformatted = formatdate(itempubdate,dateformat)
     else:
         itempubdate = None
     return json.dumps({'type': 'item',
@@ -71,7 +72,7 @@ def getfeeditem(item,feedname,feedregion,feedsubject,feedfilter):
                                'description': itemdesc,
                                'link': itemlink,
                                'subjects': itemsubjects,
-                               'pubDate': itempubdate}})
+                               'pubDate': itempubdateformatted}})
 
 
 def checkitem(date,url):
