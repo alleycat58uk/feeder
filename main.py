@@ -19,7 +19,7 @@ for feed in allfeeds:
         soup = BeautifulSoup(r.text, "xml")
         items = soup.find_all("item")
         for item in items:
-            payload = feeds.getfeeditem(item,feed['name'],feed['region'],feed['subject'],feed['filter'],
+            payload = feeds.getfeeditem(item, feed['name'], feed['region'], feed['subject'], feed['filter'],
                                         feed['date-format'])
             rt = requests.post('http://127.0.0.1:5984/feeder', data=payload, headers={'Content-Type': 'application/json'})
             print(rt)
