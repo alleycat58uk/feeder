@@ -57,7 +57,7 @@ def getfeeditem(item,feedname,feedregion,feedsubject,feedfilter,dateformat):
         itemsubjects = None
     if item.find(pubdatetag):
         itempubdate = item.find(pubdatetag).contents[0]
-        itempubdateformatted = datetime.strptime(itempubdate, dateformat)
+        itempubdateformatted = datetime.strptime(itempubdate, dateformat).strftime("%Y-%M-%d %H:%M:%S")
     else:
         itempubdateformatted = None
     return json.dumps({'type': 'item',
