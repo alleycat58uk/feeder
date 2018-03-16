@@ -3,7 +3,7 @@ import json
 from datetime import datetime
 
 
-def addfeed(name,url,region,subject,filter,dateformat):
+def addfeed(name, url, region, subject, filter, dateformat):
     pass
 
 
@@ -29,7 +29,7 @@ def getallfeeds():
     return json.loads(r.text)['docs']
 
 
-def getfeeditem(item,feedname,feedregion,feedsubject,feedfilter,dateformat):
+def getfeeditem(item, feedname, feedregion, feedsubject, feedfilter, dateformat):
     # set tag name lists for parsing news items
     titletag = ['title']
     descriptiontag = ['description']
@@ -76,9 +76,9 @@ def getfeeditem(item,feedname,feedregion,feedsubject,feedfilter,dateformat):
                                'pubDate': itempubdateformatted}})
 
 
-def checkitem(date,url):
+def checkitem(feedtitle, itemtitle, url):
     pass
 
 
-def saveitem(name,url,region,subject,filter,dateformat):
+def saveitem(name, url, region, subject, filter, dateformat):
     pass
