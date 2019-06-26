@@ -1,84 +1,55 @@
 import requests
 import json
-from datetime import datetime
 
 
-def addfeed(name, url, region, subject, filter, dateformat):
+def add_feed(name, url, region, subject, filter, dateformat):
     pass
 
 
-def getallfeeds():
-    url = "http://127.0.0.1:5984/feeder/_find"
+def update_feed():
+    pass
+
+
+def get_all_feeds():
+    url = "http://127.0.0.1:5984/feedr/_find"
     headers = {'Content-Type': 'application/json', 'Accept': 'application/json'}
     payload = json.dumps({
         "selector": {
-            "type": {
-                "$eq": "feed"
+            "feeds": {
+                "$exists": True
             }
         },
         "fields": [
-            "name",
-            "url",
-            "region",
-            "subject",
-            "filter",
-            "date-format"
+            "organisation",
+            "feeds"
         ]
     })
     r = requests.post(url, headers=headers, data=payload)
+    # TODO: handle an empty request
     return json.loads(r.text)['docs']
 
 
-def getfeeditem(item, feedname, feedregion, feedsubject, feedfilter, dateformat):
-    # set tag name lists for parsing news items
-    titletag = ['title']
-    descriptiontag = ['description']
-    linktag = ['link']
-    subjecttag = ['subject', 'category']
-    pubdatetag = ['date', 'pubDate']
-    # extract required item details
-    if item.find(titletag):
-        itemtitle = item.find(titletag).contents[0]
-    else:
-        itemtitle = None
-    if item.find(descriptiontag):
-        itemdesc = item.find(descriptiontag).contents[0]
-    else:
-        itemdesc = None
-    if item.find(linktag):
-        itemlink = item.find(linktag).contents[0]
-    else:
-        itemlink = None
-    if item.find(subjecttag):
-        itemsubjects = []
-        for subject in item.find_all(subjecttag):
-            itemsubjects.append(subject.contents[0])
-    else:
-        itemsubjects = None
-    if item.find(pubdatetag):
-        itempubdate = item.find(pubdatetag).contents[0]
-        itempubdateformatted = datetime.strptime(itempubdate, dateformat).strftime("%Y-%M-%d %H:%M:%S")
-    else:
-        itempubdateformatted = None
-    return json.dumps({'type': 'item',
-                      'accessed': {
-                          'first': 'today',
-                          'last': 'today'
-                      },
-                      'feed': {'title': feedname,
-                               'region': feedregion,
-                               'subject': feedsubject,
-                               'filter': feedfilter},
-                      'item': {'title': itemtitle,
-                               'description': itemdesc,
-                               'link': itemlink,
-                               'subjects': itemsubjects,
-                               'pubDate': itempubdateformatted}})
+def get_feed_items(feedurl):
+    data = None
+    r = requests.get(feedurl)
+    if r.status_code is 200:
+        # process items
+        data = r.text
+    elif r.status_code is 301:
+        data = 301
+        # update feed url
+    elif r.status_code is 404:
+        data = 404
+    return data
 
 
-def checkitem(feedtitle, itemtitle, url):
+def check_item(date, url):
     pass
 
 
-def saveitem(name, url, region, subject, filter, dateformat):
+def format_date(dateformat):
+    pass
+
+
+def save_item(name, url, region, subject, filter, dateformat):
     pass
