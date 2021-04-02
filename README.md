@@ -2,9 +2,9 @@
 Natural language processing of RSS news feed aggregations
 
 ## Aim
-- havest and agregate news feeds from around the world
+- harvest and aggregate news feeds from around the world
 - provide a searchable interface to the data
-- use natural language processing to analyse the narative
+- use natural language processing to analyse the narrative
 
 ## Progress
 - download, process and store feed items (current)
