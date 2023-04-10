@@ -1,13 +1,8 @@
 import config as cfg
 import mysql.connector as ctr
 
-# cnx = None
-# cur = None
-
 
 def open_connection():
-	# global cnx
-	# global cur
 	conn = ctr.connect(user=cfg.ro_user, password=cfg.ro_pass, host=cfg.host, database=cfg.db_name)
 	curr = conn.cursor()
 
@@ -15,11 +10,7 @@ def open_connection():
 
 
 def close_connection(conn):
-	# global cnx
-	# global cur
 	conn.close()
-	# cnx = None
-	# cur = None
 
 
 def get_org_name_by_id(org_id: int) -> str:
