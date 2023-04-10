@@ -1,3 +1,5 @@
+# import mariadb
+
 def get_org_name_by_id(org_id: int) -> str:
     """Get the name of an organisation by its id
 
