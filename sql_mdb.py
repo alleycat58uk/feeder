@@ -1,52 +1,110 @@
 import config as cfg
 import mysql.connector as ctr
 
+# cnx = None
+# cur = None
+
 
 def open_connection():
-	cnx = ctr.connect(user=cfg.ro_user, password=cfg.ro_pass, host=cfg.host, database=cfg.db_name)
-	return cnx
+	# global cnx
+	# global cur
+	conn = ctr.connect(user=cfg.ro_user, password=cfg.ro_pass, host=cfg.host, database=cfg.db_name)
+	curr = conn.cursor()
+
+	return [conn, curr]
 
 
-def close_connection(cnx):
-	cnx.close()
+def close_connection(conn):
+	# global cnx
+	# global cur
+	conn.close()
+	# cnx = None
+	# cur = None
 
 
 def get_org_name_by_id(org_id: int) -> str:
-	"""Get the name of an organisation by its id
+	"""
+	Get the name of an organisation by its id
 
 	:param org_id: organisation id
 	:return: name of the organisation name
 	:rtype: str
 	"""
-	pass
+
+	ctx = open_connection()
+	conn = ctx[0]
+	curr = ctx[1]
+
+	curr.execute('SELECT name FROM organisations WHERE id = %s', [org_id])
+
+	result = curr.fetchone()[0]
+	close_connection(conn)
+
+	return result
 
 
-def get_org_id_by_name(name: str) -> int:
+def get_org_id_by_name(org_name: str) -> int:
 	"""Get the id of an organisation by its name
 
-	:return: id of the organisation name
+	:param org_name: name of the organisation
+	:return: id of the organisation
 	:rtype: int
 	"""
-	pass
+
+	ctx = open_connection()
+	conn = ctx[0]
+	curr = ctx[1]
+
+	curr.execute('SELECT id FROM organisations WHERE name = %s', [org_name])
+
+	result = curr.fetchone()[0]
+	close_connection(conn)
+
+	return result
 
 
-def get_org_ids_by_location(location: str, place_type: str) -> list:
+def get_org_ids_by_location(location: str) -> list:
 	"""Get a list of organisation ids for a given location
 
 	:param location: name of the location
-	:param place_type: continent, region, country or place
 	:return: list of all matching organisation ids
 	"""
-	pass
+
+	ctx = open_connection()
+	conn = ctx[0]
+	curr = ctx[1]
+
+	curr.execute('SELECT id FROM organisations WHERE')
+
+	result = []
+	for id in curr:
+		result.append(id)
+
+	close_connection(conn)
+
+	return result
 
 
-def get_all_orgs() -> list:
+def get_all_org_ids() -> list:
 	"""Get a list of all organisation ids
 
 	:return: list of all organisation ids
 	:rtype: list
 	"""
-	pass
+
+	ctx = open_connection()
+	conn = ctx[0]
+	curr = ctx[1]
+
+	curr.execute('SELECT id FROM organisations')
+
+	result = []
+	for id in curr:
+		result.append(id[0])
+
+	close_connection(conn)
+
+	return result
 
 
 # feed methods
