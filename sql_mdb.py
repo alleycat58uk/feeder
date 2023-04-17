@@ -2,14 +2,26 @@ import config as cfg
 import mysql.connector as ctr
 
 
-def open_connection():
+def open_ro_connection() -> list:
+	"""
+	Open read only database connection
+
+	:return: list containing connection and cursor objects
+	:rtype: list
+	"""
 	conn = ctr.connect(user=cfg.ro_user, password=cfg.ro_pass, host=cfg.host, database=cfg.db_name)
 	curr = conn.cursor()
 
 	return [conn, curr]
 
 
-def close_connection(conn):
+def close_ro_connection(conn):
+	"""
+	Close read only database connection
+
+	:param conn: read only database connection object
+	:return:
+	"""
 	conn.close()
 
 
@@ -22,14 +34,14 @@ def get_org_name_by_id(org_id: int) -> str:
 	:rtype: str
 	"""
 
-	ctx = open_connection()
+	ctx = open_ro_connection()
 	conn = ctx[0]
 	curr = ctx[1]
 
 	curr.execute('SELECT name FROM organisations WHERE id = %s', [org_id])
 
 	result = curr.fetchone()[0]
-	close_connection(conn)
+	close_ro_connection(conn)
 
 	return result
 
@@ -42,14 +54,14 @@ def get_org_id_by_name(org_name: str) -> int:
 	:rtype: int
 	"""
 
-	ctx = open_connection()
+	ctx = open_ro_connection()
 	conn = ctx[0]
 	curr = ctx[1]
 
 	curr.execute('SELECT id FROM organisations WHERE name = %s', [org_name])
 
 	result = curr.fetchone()[0]
-	close_connection(conn)
+	close_ro_connection(conn)
 
 	return result
 
@@ -61,7 +73,7 @@ def get_org_ids_by_location(location: str) -> list:
 	:return: list of all matching organisation ids
 	"""
 
-	ctx = open_connection()
+	ctx = open_ro_connection()
 	conn = ctx[0]
 	curr = ctx[1]
 
@@ -71,7 +83,7 @@ def get_org_ids_by_location(location: str) -> list:
 	for id in curr:
 		result.append(id)
 
-	close_connection(conn)
+	close_ro_connection(conn)
 
 	return result
 
@@ -83,7 +95,7 @@ def get_all_org_ids() -> list:
 	:rtype: list
 	"""
 
-	ctx = open_connection()
+	ctx = open_ro_connection()
 	conn = ctx[0]
 	curr = ctx[1]
 
@@ -93,7 +105,7 @@ def get_all_org_ids() -> list:
 	for id in curr:
 		result.append(id[0])
 
-	close_connection(conn)
+	close_ro_connection(conn)
 
 	return result
 
