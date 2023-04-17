@@ -77,7 +77,7 @@ def get_org_ids_by_location(location: str) -> list:
 	conn = ctx[0]
 	curr = ctx[1]
 
-	curr.execute('SELECT id FROM organisations WHERE')
+	curr.execute('SELECT id FROM organisations WHERE place = %s', location)
 
 	result = []
 	for id in curr:
