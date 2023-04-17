@@ -25,6 +25,29 @@ def close_ro_connection(conn):
 	conn.close()
 
 
+def open_rw_connection() -> list:
+	"""
+	Open read only database connection
+
+	:return: list containing connection and cursor objects
+	:rtype: list
+	"""
+	conn = ctr.connect(user=cfg.rw_user, password=cfg.rw_pass, host=cfg.host, database=cfg.db_name)
+	curr = conn.cursor()
+
+	return [conn, curr]
+
+
+def close_rw_connection(conn):
+	"""
+	Close read only database connection
+
+	:param conn: read only database connection object
+	:return:
+	"""
+	conn.close()
+
+
 def get_org_name_by_id(org_id: int) -> str:
 	"""
 	Get the name of an organisation by its id
