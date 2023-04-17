@@ -167,15 +167,6 @@ def update_feed(feed_id: int, name: str = None, url: str = None, organisation: s
 	pass
 
 
-def get_all_feeds() -> list:
-	"""Get all feed ids
-
-	:return: list of all feed ids
-	:rtype: list
-	"""
-	pass
-
-
 def get_all_feeds_by_org(org_id: int) -> list:
 	"""Get all feed ids for a given organisation
 
