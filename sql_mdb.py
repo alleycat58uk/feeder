@@ -174,7 +174,20 @@ def get_all_feeds_by_org(org_id: int) -> list:
 	:return: list of all feed ids
 	:rtype: list
 	"""
-	pass
+
+	ctx = open_ro_connection()
+	conn = ctx[0]
+	curr = ctx[1]
+
+	curr.execute('SELECT id FROM feeds WHERE organisation_id = %s', org_id)
+
+	result = []
+	for id in curr:
+		result.append(id[0])
+
+	close_ro_connection(conn)
+
+	return result
 
 
 # utility methods
