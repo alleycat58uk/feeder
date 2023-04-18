@@ -15,19 +15,9 @@ def open_ro_connection() -> list:
 	return [conn, curr]
 
 
-def close_ro_connection(conn):
-	"""
-	Close read only database connection
-
-	:param conn: read only database connection object
-	:return:
-	"""
-	conn.close()
-
-
 def open_rw_connection() -> list:
 	"""
-	Open read only database connection
+	Open read write database connection
 
 	:return: list containing connection and cursor objects
 	:rtype: list
@@ -38,12 +28,11 @@ def open_rw_connection() -> list:
 	return [conn, curr]
 
 
-def close_rw_connection(conn):
+def close_connection(conn):
 	"""
-	Close read only database connection
+	Close database connection
 
-	:param conn: read only database connection object
-	:return:
+	:param conn: only database connection object
 	"""
 	conn.close()
 
