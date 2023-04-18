@@ -53,7 +53,7 @@ def get_org_name_by_id(org_id: int) -> str:
 	curr.execute('SELECT name FROM organisations WHERE id = %s', [org_id])
 
 	result = curr.fetchone()[0]
-	close_ro_connection(conn)
+	close_connection(conn)
 
 	return result
 
@@ -73,7 +73,7 @@ def get_org_id_by_name(org_name: str) -> int:
 	curr.execute('SELECT id FROM organisations WHERE name = %s', [org_name])
 
 	result = curr.fetchone()[0]
-	close_ro_connection(conn)
+	close_connection(conn)
 
 	return result
 
@@ -89,13 +89,13 @@ def get_org_ids_by_location(location: str) -> list:
 	conn = ctx[0]
 	curr = ctx[1]
 
-	curr.execute('SELECT id FROM organisations WHERE place = %s', location)
+	curr.execute('SELECT ORG.id FROM organisations ORG INNER JOIN locations LOC WHERE place = %s', location)
 
 	result = []
 	for id in curr:
 		result.append(id)
 
-	close_ro_connection(conn)
+	close_connection(conn)
 
 	return result
 
@@ -117,26 +117,34 @@ def get_all_org_ids() -> list:
 	for id in curr:
 		result.append(id[0])
 
-	close_ro_connection(conn)
+	close_connection(conn)
 
 	return result
 
 
 # feed methods
 
-def add_feed(name: str, url: str, organisation: str, location: str, feed_type: str, subject: list = None) -> bool:
+def add_feed(name: str, url: str, org_id: int, location_id: int = None, feed_type: str = None, subject_id: int = None):
 	"""Store details of a new feed to the database
 
 	:param name: name of the feed
 	:param url: url of the feed
-	:param organisation: name of the organisation
+	:param org_id: id of the organisation
 	:param subject: list of subjects describing the feed
-	:param location: string for the geographical location of the feed
+	:param location_id: string for the geographical location of the feed
 	:param feed_type: code representing the type of feed ie news, video, blog etc.
 	:return: true for success, false for failure
 	:rtype: bool
 	"""
-	pass
+	ctx = open_rw_connection()
+	conn = ctx[0]
+	curr = ctx[1]
+
+	curr.execute('INSERT INTO feeds (name, url, organisation_id, subject_id, location_id, type)'
+	             'VALUES (%s, %s, %s, %s, %s, %s)', (name, url, org_id, subject_id, location_id, feed_type)
+	)
+
+	close_connection(conn)
 
 
 def update_feed(feed_id: int, name: str = None, url: str = None, organisation: str = None, subject: list = None,
@@ -174,7 +182,7 @@ def get_all_feeds_by_org(org_id: int) -> list:
 	for id in curr:
 		result.append(id[0])
 
-	close_ro_connection(conn)
+	close_connection(conn)
 
 	return result
 
