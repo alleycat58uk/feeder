@@ -19,4 +19,4 @@ Natural language processing of RSS news feed aggregations
 
 - MariaDB
   - MySQL Python Connector 
-    (_MariaDB connector is platform specific, requires native c connector_)
+    (MariaDB connector is platform specific, requires native c connector)
