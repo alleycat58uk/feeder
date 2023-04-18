@@ -34,7 +34,8 @@ def close_connection(conn):
 
 	:param conn: only database connection object
 	"""
-	conn.close()
+	if conn:
+		conn.close()
 
 
 def get_org_name_by_id(org_id: int) -> str:
