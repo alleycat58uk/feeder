@@ -195,9 +195,3 @@ def get_all_feeds_by_org(org_id: int) -> list:
 	close_connection(conn)
 
 	return result
-
-
-# utility methods
-
-def format_date(date):
-	pass
