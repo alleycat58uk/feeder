@@ -6,18 +6,17 @@ Natural language processing of RSS news feed aggregations
 - provide a searchable interface to the data
 - use natural language processing to analyse the narrative
 
-## Progress
-- download, process and store feed items (current)
-- create search interface for stored items (to do)
-- natural language processing of items (to do)
-
 ## Technologies
-- Python 3
-- couchDB
+- Python 3.11
+- MariaDB 10.3
+- CouchDB
 
 ## Dependencies
-- Python 3 (tested with 3.6.4)
-  - requests
-  - beautifulsoup4
+- Python
+  - Requests
+  - BeautifulSoup4
   - json
-- couchDB 2 (tested with 2.1.1)
+
+- MariaDB
+  - MySQL Python Connector 
+    (MariaDB connector is platform specific, requires native c connector)
