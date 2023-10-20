@@ -28,12 +28,16 @@ def open_rw_connection() -> list:
 	return [conn, curr]
 
 
-def close_connection(conn):
+def close_connection(conn, curr):
 	"""
-	Close database connection
+	Close database cursor and connection
 
-	:param conn: only database connection object
+	:param conn: database connection object
+	:param curr: database cursor object
 	"""
+	if curr:
+		curr.close()
+
 	if conn:
 		conn.close()
 
