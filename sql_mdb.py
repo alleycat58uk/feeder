@@ -168,9 +168,15 @@ def update_feed(feed_id: int, url: str = None, org_id: str = None, subject_id: l
 	conn = ctx[0]
 	curr = ctx[1]
 
-	curr.execute('INSERT INTO feeds (url, organisation_id, subject_id, location_id)'
-				 'VALUES (%s, %s, %s, %s)', (url, org_id, subject_id, location_id)
+	curr.execute(
+		'UPDATE feeds SET url = %s, organisation_id = %s, subject_id = %s, location_id = %s WHERE id = %S',
+		(url, org_id, subject_id, location_id, feed_id)
+
 	)
+
+	# curr.execute('INSERT INTO feeds (url, organisation_id, subject_id, location_id)'
+	# 			 'VALUES (%s, %s, %s, %s)', (url, org_id, subject_id, location_id)
+	# )
 
 	close_connection(conn, curr)
 
