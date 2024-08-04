@@ -8,3 +8,11 @@ rw_user = "read_write_username"
 rw_pass = "read_write_password"
 
 db_name = "db_name"
+
+# nosql couchdb
+nosql_host = ""
+
+nossql_user = ""
+nosql_pass = ""
+
+nosql_db_name = ""
