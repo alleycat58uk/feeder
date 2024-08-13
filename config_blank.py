@@ -1,18 +1,18 @@
 # sql mariadb
-host = "host_name"
+sql_host = "sql_host_name"
 
-ro_user = "read_only_username"
-ro_pass = "read_only_password"
+sql_ro_user = "sql_read_only_username"
+sql_ro_pass = "sql_read_only_password"
 
-rw_user = "read_write_username"
-rw_pass = "read_write_password"
+sql_rw_user = "sql_read_write_username"
+rsql_w_pass = "sql_read_write_password"
 
-db_name = "db_name"
+sql_db_name = "sql_db_name"
 
 # nosql couchdb
-nosql_host = ""
+nosql_host = "nosql_host_name"
 
-nossql_user = ""
-nosql_pass = ""
+nossql_user = "nosql_user_name"
+nosql_pass = "nosql_password"
 
-nosql_db_name = ""
+nosql_db_name = "nosql_db_name"
