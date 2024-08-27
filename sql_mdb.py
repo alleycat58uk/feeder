@@ -2,6 +2,10 @@ import config as cfg
 import mysql.connector as ctr
 
 
+# ###################### #
+#  connectivity methods  #
+# ###################### #
+
 def open_ro_connection() -> list:
 	"""
 	Open read only database connection
@@ -9,7 +13,7 @@ def open_ro_connection() -> list:
 	:return: list containing connection and cursor objects
 	:rtype: list
 	"""
-	conn = ctr.connect(user=cfg.ro_user, password=cfg.ro_pass, host=cfg.host, database=cfg.db_name)
+	conn = ctr.connect(user=cfg.sql_ro_user, password=cfg.sql_ro_pass, host=cfg.sql_host, database=cfg.sql_db_name)
 	curr = conn.cursor()
 
 	return [conn, curr]
@@ -22,7 +26,7 @@ def open_rw_connection() -> list:
 	:return: list containing connection and cursor objects
 	:rtype: list
 	"""
-	conn = ctr.connect(user=cfg.rw_user, password=cfg.rw_pass, host=cfg.host, database=cfg.db_name)
+	conn = ctr.connect(user=cfg.sql_rw_user, password=cfg.sql_rw_pass, host=cfg.sql_host, database=cfg.sql_db_name)
 	curr = conn.cursor()
 
 	return [conn, curr]
@@ -41,6 +45,10 @@ def close_connection(conn, curr):
 	if conn:
 		conn.close()
 
+
+# ###################### #
+#  organisation methods  #
+# ###################### #
 
 def get_org_name_by_id(org_id: int) -> str:
 	"""
@@ -64,7 +72,8 @@ def get_org_name_by_id(org_id: int) -> str:
 
 
 def get_org_id_by_name(org_name: str) -> int:
-	"""Get the id of an organisation by its name
+	"""
+	Get the id of an organisation by its name
 
 	:param org_name: name of the organisation
 	:return: id of the organisation
@@ -84,7 +93,8 @@ def get_org_id_by_name(org_name: str) -> int:
 
 
 def get_org_ids_by_location(location: str) -> list:
-	"""Get a list of organisation ids for a given location
+	"""
+	Get a list of organisation ids for a given location
 
 	:param location: name of the location
 	:return: list of all matching organisation ids
@@ -106,7 +116,8 @@ def get_org_ids_by_location(location: str) -> list:
 
 
 def get_all_org_ids() -> list:
-	"""Get a list of all organisation ids
+	"""G
+	et a list of all organisation ids
 
 	:return: list of all organisation ids
 	:rtype: list
@@ -124,16 +135,69 @@ def get_all_org_ids() -> list:
 
 	close_connection(conn, curr)
 
+	# TODO return result as dictionary
+	return result
+
+# ################### #
+#  feed page methods  #
+# ################### #
+
+def get_feed_page_url_by_id(feed_id: int) -> str:
+	pass
+
+
+def get_feed_page_url_by_org_id(org_id: int) -> list:
+	pass
+
+
+def get_all_feed_pages() -> list:
+	"""
+	Get a list of all feed page ids and urls
+	"""
+
+	ctx = open_ro_connection()
+	conn = ctx[0]
+	curr = ctx[1]
+
+	curr.execute('SELECT id, url, organisation_id FROM feed_pages WHERE in_use = \'Y\'')
+
+	result = []
+	for id, url, organisation_id in curr:
+		result.append((id, url, organisation_id))
+
+	close_connection(conn, curr)
+
+	# TODO return result as dictionary
 	return result
 
 
-# feed methods
+# ############## #
+#  feed methods  #
+# ############## #
 
-def add_feed(url: str, org_id: int, location_id: int = None, subject_id: int = None):
-	"""Store details of a new feed to the database
+def get_feed_url_by_id(feed_id: int) -> str:
+	pass
+
+
+def get_feed_ids_by_org_id(org_id: int) -> list:
+	pass
+
+
+def get_all_feeds_by_location_id(location_id: int) -> list:
+	pass
+
+
+def get_all_feeds_by_subject_id(subject_id: int) -> list:
+	pass
+
+
+def add_feed(url: str, org_id: int, name: str = None, location_id: int = None, subject_id: int = None):
+	"""
+	Store details of a new feed to the database
 
 	:param url: url of the feed
 	:param org_id: id of the organisation
+	:param name: name of the feed
 	:param subject_id: list of subjects describing the feed
 	:param location_id: string for the geographical location of the feed
 
@@ -151,9 +215,9 @@ def add_feed(url: str, org_id: int, location_id: int = None, subject_id: int = N
 	close_connection(conn, curr)
 
 
-def update_feed(feed_id: int, url: str = None, org_id: str = None, subject_id: list = None,
-				location_id: str = None):
-	"""Update one or more details for a given feed id
+def update_feed(feed_id: int, url: str = None, org_id: str = None, subject_id: list = None, location_id: str = None):
+	"""
+	Update one or more details for a given feed id
 
 	:param feed_id: id of organisation to update
 	:param url: url of the feed
@@ -174,31 +238,24 @@ def update_feed(feed_id: int, url: str = None, org_id: str = None, subject_id: l
 
 	)
 
-	# curr.execute('INSERT INTO feeds (url, organisation_id, subject_id, location_id)'
-	# 			 'VALUES (%s, %s, %s, %s)', (url, org_id, subject_id, location_id)
-	# )
-
 	close_connection(conn, curr)
 
 
-def get_all_feeds_by_org(org_id: int) -> list:
-	"""Get all feed ids for a given organisation
-
-	:param org_id: id for a given organisation
-	:return: list of all feed ids
-	:rtype: list
-	"""
-
-	ctx = open_ro_connection()
-	conn = ctx[0]
-	curr = ctx[1]
-
-	curr.execute('SELECT id FROM feeds WHERE organisation_id = %s', org_id)
-
-	result = []
-	for id in curr:
-		result.append(id[0])
-
-	close_connection(conn, curr)
-
-	return result
+# def get_all_feeds_by_org(org_id: int) -> list:
+# 	"""
+# 	Get all feed ids for a given organisation
+#
+# 	:param org_id: id for a given organisation
+# 	:return: list of all feed ids
+# 	:rtype: list
+# 	"""
+#
+# 	ctx = open_ro_connection()
+# 	conn = ctx[0]
+# 	curr = ctx[1]
+#
+# 	curr.execute('SELECT id FROM feeds WHERE organisation_id = %s', org_id)
+#
+# 	result = []
+#
+# 	return result
