@@ -135,7 +135,6 @@ def get_all_org_ids() -> list:
 
 	close_connection(conn, curr)
 
-	# TODO return result as dictionary
 	return result
 
 # ################### #
@@ -167,7 +166,6 @@ def get_all_feed_pages() -> list:
 
 	close_connection(conn, curr)
 
-	# TODO return result as dictionary
 	return result
 
 
