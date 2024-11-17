@@ -9,7 +9,7 @@ def open_ro_connection() -> list:
 	:return: list containing connection and cursor objects
 	:rtype: list
 	"""
-	conn = ctr.connect(user=cfg.ro_user, password=cfg.ro_pass, host=cfg.host, database=cfg.db_name)
+	conn = ctr.connect(user=cfg.sql_ro_user, password=cfg.sql_ro_pass, host=cfg.sql_host, database=cfg.sql_db_name)
 	curr = conn.cursor()
 
 	return [conn, curr]
@@ -22,7 +22,7 @@ def open_rw_connection() -> list:
 	:return: list containing connection and cursor objects
 	:rtype: list
 	"""
-	conn = ctr.connect(user=cfg.rw_user, password=cfg.rw_pass, host=cfg.host, database=cfg.db_name)
+	conn = ctr.connect(user=cfg.sql_rw_user, password=cfg.sql_rw_pass, host=cfg.sql_host, database=cfg.sql_db_name)
 	curr = conn.cursor()
 
 	return [conn, curr]
@@ -129,7 +129,7 @@ def get_all_org_ids() -> list:
 
 # feed methods
 
-def add_feed(url: str, org_id: int, location_id: int = None, subject_id: int = None):
+def add_feed(url: str, org_id: int, location_id: int, subject_id: int):
 	"""Store details of a new feed to the database
 
 	:param url: url of the feed
@@ -151,8 +151,8 @@ def add_feed(url: str, org_id: int, location_id: int = None, subject_id: int = N
 	close_connection(conn, curr)
 
 
-def update_feed(feed_id: int, url: str = None, org_id: str = None, subject_id: list = None,
-				location_id: str = None):
+def update_feed(feed_id: int, url: str, org_id: str, subject_id: list,
+				location_id: str):
 	"""Update one or more details for a given feed id
 
 	:param feed_id: id of organisation to update
