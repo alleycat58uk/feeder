@@ -189,13 +189,13 @@ def get_all_feeds_by_subject_id(subject_id: int) -> list:
 	pass
 
 
-def add_feed(url: str, org_id: int, name: str = None, location_id: int = None, subject_id: int = None):
+def add_feed(url: str, feed_page_id: int, org_id: int, location_id: int = None, subject_id: int = None):
 	"""
 	Store details of a new feed to the database
 
 	:param url: url of the feed
+	:param feed_page_id: id of the feed page
 	:param org_id: id of the organisation
-	:param name: name of the feed
 	:param subject_id: list of subjects describing the feed
 	:param location_id: string for the geographical location of the feed
 
@@ -206,8 +206,8 @@ def add_feed(url: str, org_id: int, name: str = None, location_id: int = None, s
 	conn = ctx[0]
 	curr = ctx[1]
 
-	curr.execute('INSERT INTO feeds (url, organisation_id, subject_id, location_id)'
-				 'VALUES (%s, %s, %s, %s)', (url, org_id, subject_id, location_id)
+	curr.execute('INSERT INTO feeds (url, feed_page_id, organisation_id, subject_id, location_id)'
+				 'VALUES (%s, %s, %s, %s, %s)', (url, feed_page_id, org_id, subject_id, location_id)
 	)
 
 	close_connection(conn, curr)
