@@ -27,12 +27,13 @@ for fp in fp_result:
 			elif link.has_attr('href') and util.is_rss_path(link['href']):
 				linkUrl = link['href'].strip()
 				all_links.append([util.get_absolute_url(linkUrl, fp_url), link.text.strip(), fp_org_id])
-				print([util.get_absolute_url(linkUrl, fp_url), link.text.strip(), fp_org_id])
+				# print([util.get_absolute_url(linkUrl, fp_url), link.text.strip(), fp_org_id])
 
 # print(all_links)
-df_links = pd.DataFrame(all_links)
-
-df_links.head()
-print(df_links.shape[0])
+df_links = pd.DataFrame(all_links, columns=['feed_url', 'description', 'organisation_id'])
+df_links.drop_duplicates(subset=['feed_url'], inplace=True)
+print('------------------------------')
+print(df_links.head(100))
+# print(df_links.shape[0])
 
 # 124
