@@ -1,9 +1,11 @@
 import sql_mdb as mdb
+import nosql_cdb as cdb
 # from urllib.parse import urlparse
 # from urllib.parse import urljoin
 # from urllib.parse import urlunparse
 import urllib.parse as lp
 import utilities as util
+import config as cfg
 
 
 # -------------------------------------------------
@@ -55,3 +57,7 @@ import utilities as util
 # url = 'https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=15837362'
 # print(lp.urlparse(url))
 # print(util.get_ext(url))
+
+# -------------------------------------------------
+
+# print(cdb.get_guids())
