@@ -60,4 +60,4 @@ import config as cfg
 
 # -------------------------------------------------
 
-# print(cdb.get_guids())
+print(cdb.get_guids())
