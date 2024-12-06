@@ -23,15 +23,16 @@ for fp in fp_result:
 		for link in links:
 			if link.has_attr('href') and util.get_ext(link['href']) == 'xml':
 				linkUrl = link['href'].strip()
-				all_links.append([linkUrl, link.text.strip(), fp_org_id])
+				all_links.append([linkUrl, link.text.strip(), fp_id, fp_org_id])
 			elif link.has_attr('href') and util.is_rss_path(link['href']):
 				linkUrl = link['href'].strip()
-				all_links.append([util.get_absolute_url(linkUrl, fp_url), link.text.strip(), fp_org_id])
+				all_links.append([util.get_absolute_url(linkUrl, fp_url), link.text.strip(), fp_id, fp_org_id])
 				# print([util.get_absolute_url(linkUrl, fp_url), link.text.strip(), fp_org_id])
 
 # print(all_links)
-df_links = pd.DataFrame(all_links, columns=['feed_url', 'description', 'organisation_id'])
+df_links = pd.DataFrame(all_links, columns=['feed_url', 'description', 'feed_page_id', 'organisation_id'])
 df_links.drop_duplicates(subset=['feed_url'], inplace=True)
+mdb.add_feed()
 print('------------------------------')
 print(df_links.head(100))
 # print(df_links.shape[0])

@@ -199,15 +199,20 @@ def add_feed(url: str, feed_page_id: int, org_id: int, location_id: int = None, 
 	:param subject_id: list of subjects describing the feed
 	:param location_id: string for the geographical location of the feed
 
-	:return: true for success, false for failure
-	:rtype: bool
+	# :return: true for success, false for failure
+	# :rtype: bool
 	"""
 	ctx = open_rw_connection()
 	conn = ctx[0]
 	curr = ctx[1]
 
 	curr.execute('INSERT INTO feeds (url, feed_page_id, organisation_id, subject_id, location_id)'
-				 'VALUES (%s, %s, %s, %s, %s)', (url, feed_page_id, org_id, subject_id, location_id)
+				 'VALUES (%s, %s, %s, %s, %s)', (url, feed_page_id, org_id, subject_id, location_id
+				  ON DUPLICATE KEY UPDATE 
+				  		feed_page_id = feed_page_id
+						,organisation_id = org_id
+						,subject_id = subject_id
+						,location_id = location_id)
 	)
 
 	close_connection(conn, curr)
