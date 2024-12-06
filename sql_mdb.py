@@ -189,7 +189,7 @@ def get_all_feeds_by_subject_id(subject_id: int) -> list:
 	pass
 
 
-def add_feed(url: str, feed_page_id: int, org_id: int, location_id: int = None, subject_id: int = None):
+def add_feed(url: str, text: str, feed_page_id: int, org_id: int):
 	"""
 	Store details of a new feed to the database
 
@@ -206,13 +206,9 @@ def add_feed(url: str, feed_page_id: int, org_id: int, location_id: int = None, 
 	conn = ctx[0]
 	curr = ctx[1]
 
-	curr.execute('INSERT INTO feeds (url, feed_page_id, organisation_id, subject_id, location_id)'
-				 'VALUES (%s, %s, %s, %s, %s)', (url, feed_page_id, org_id, subject_id, location_id
-				  ON DUPLICATE KEY UPDATE 
-				  		feed_page_id = feed_page_id
-						,organisation_id = org_id
-						,subject_id = subject_id
-						,location_id = location_id)
+	curr.execute('INSERT INTO feeds (url, text, feed_page_id, organisation_id)'
+				 'VALUES (%s, %s, %s, %s) ON DUPLICATE KEY UPDATE text = %s', (url, text, feed_page_id, org_id, '')
+
 	)
 
 	close_connection(conn, curr)
